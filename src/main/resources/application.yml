@@ -14,6 +14,7 @@ spring:
         format_sql: true
         show_sql: true # 쿼리 system.out 으로 출력
         dialect: org.hibernate.dialect.H2Dialect # SQL 방언 설정
+        use_sql_comments: true # 실행되는 쿼리 주석이 나옴
 
 logging:
   level:
