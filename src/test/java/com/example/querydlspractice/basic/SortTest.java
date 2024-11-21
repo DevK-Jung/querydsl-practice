@@ -1,8 +1,7 @@
-package com.example.querydlspractice.sort;
+package com.example.querydlspractice.basic;
 
 import com.example.querydlspractice.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
-import com.example.querydlspractice.team.entity.Team;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -18,7 +17,7 @@ import static com.example.querydlspractice.member.entity.QMember.member;
 
 @Transactional
 @SpringBootTest
-public class QuerydslSortTest {
+public class SortTest {
 
     @Autowired
     EntityManager em;

@@ -1,4 +1,4 @@
-package com.example.querydlspractice.paging;
+package com.example.querydlspractice.basic;
 
 import com.example.querydlspractice.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
@@ -17,7 +17,7 @@ import static com.example.querydlspractice.member.entity.QMember.*;
 
 @Transactional
 @SpringBootTest
-public class QueryDslPagingTest {
+public class PagingTest {
     @Autowired
     EntityManager em;
 
