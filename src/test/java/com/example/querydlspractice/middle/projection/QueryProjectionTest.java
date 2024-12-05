@@ -3,7 +3,6 @@ package com.example.querydlspractice.middle.projection;
 import com.example.querydlspractice.TestDataUtil;
 import com.example.querydlspractice.dto.MemberDto;
 import com.example.querydlspractice.dto.QMemberDto;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
