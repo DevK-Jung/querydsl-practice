@@ -1,7 +1,9 @@
 package com.example.querydlspractice.middle.projection;
 
 import com.example.querydlspractice.TestDataUtil;
-import com.querydsl.core.Tuple;
+import com.example.querydlspractice.dto.MemberDto;
+import com.example.querydlspractice.dto.QMemberDto;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +18,7 @@ import static com.example.querydlspractice.member.entity.QMember.member;
 
 @Transactional
 @SpringBootTest
-public class ProjectionTest {
-
+public class QueryProjectionTest {
     @Autowired
     EntityManager em;
 
@@ -31,30 +32,14 @@ public class ProjectionTest {
     }
 
     @Test
-    public void simpleProjection() {
-        List<String> result = queryFactory
-                .select(member.username)
+    public void findDtoByField() {
+        List<MemberDto> result = queryFactory
+                .select(new QMemberDto(member.username, member.age))
                 .from(member)
                 .fetch();
 
-        for (String s : result) {
-            System.out.println("s = " + s);
+        for (MemberDto memberDto : result) {
+            System.out.println("memberDto = " + memberDto);
         }
     }
-
-    @Test
-    public void tupleProjection() {
-        List<Tuple> tuple = queryFactory
-                .select(member.username, member.age)
-                .from(member)
-                .fetch();
-
-        for (Tuple tuple1 : tuple) {
-            String username = tuple1.get(member.username);
-            Integer age = tuple1.get(member.age);
-            System.out.println("username = " + username);
-            System.out.println("age = " + age);
-        }
-    }
-
 }

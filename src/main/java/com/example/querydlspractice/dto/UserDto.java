@@ -1,8 +1,7 @@
-package com.example.querydlspractice.middle.projection.dto;
+package com.example.querydlspractice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

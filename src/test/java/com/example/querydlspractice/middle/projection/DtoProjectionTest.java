@@ -1,9 +1,9 @@
 package com.example.querydlspractice.middle.projection;
 
 import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.dto.MemberDto;
+import com.example.querydlspractice.dto.UserDto;
 import com.example.querydlspractice.member.entity.QMember;
-import com.example.querydlspractice.middle.projection.dto.MemberDto;
-import com.example.querydlspractice.middle.projection.dto.UserDto;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
@@ -37,7 +37,7 @@ public class DtoProjectionTest {
     @Test
     public void findDtoByJPQL() { // 생성자 주입으로 생성 가능
         List<MemberDto> resultList = em.createQuery(
-                        "select new com.example.querydlspractice.middle.projection.dto.MemberDto(m.username, m.age)" +
+                        "select new com.example.querydlspractice.dto.MemberDto(m.username, m.age)" +
                                 " from Member m",
                         MemberDto.class)
                 .getResultList();
