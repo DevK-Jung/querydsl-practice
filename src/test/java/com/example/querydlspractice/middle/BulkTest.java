@@ -1,17 +1,14 @@
-package com.example.querydlspractice.middle.bulk;
+package com.example.querydlspractice.middle;
 
 import com.example.querydlspractice.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
-import com.example.querydlspractice.member.entity.QMember;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -34,6 +31,7 @@ public class BulkTest {
     }
 
     @Test
+    @Commit
     public void bulkUpdate() {
         long count = queryFactory
                 .update(member)
@@ -56,6 +54,7 @@ public class BulkTest {
     }
 
     @Test
+    @Commit
     public void bulkAdd() {
         long count = queryFactory
                 .update(member)
@@ -64,6 +63,7 @@ public class BulkTest {
     }
 
     @Test
+    @Commit
     public void bulkDelete() {
         long count = queryFactory
                 .delete(member)
