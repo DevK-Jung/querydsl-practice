@@ -1,5 +1,8 @@
 package com.example.querydlspractice.member.repository;
 
+import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.dto.MemberSearchCondition;
+import com.example.querydlspractice.dto.MemberTeamDto;
 import com.example.querydlspractice.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -51,6 +54,20 @@ class MemberJpaRepositoryTest {
 
         List<Member> result = memberJpaRepository.findByUsername_Querydsl("member1");
         assertThat(result).containsExactly(member);
+    }
+
+    @Test
+    public void searchTest() {
+        TestDataUtil.setupTestData(em);
+
+        MemberSearchCondition condition = new MemberSearchCondition();
+        condition.setAgeGoe(35);
+        condition.setAgeLoe(40);
+        condition.setTeamName("teamB");
+
+        List<MemberTeamDto> results = memberJpaRepository.searchByBuilder(condition);
+
+        assertThat(results).extracting("username").containsExactly("member4");
     }
 
 }
