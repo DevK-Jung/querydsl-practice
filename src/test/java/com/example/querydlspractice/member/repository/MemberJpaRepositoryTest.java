@@ -70,4 +70,18 @@ class MemberJpaRepositoryTest {
         assertThat(results).extracting("username").containsExactly("member4");
     }
 
+    @Test
+    public void searchTest_BooleanExpression() {
+        TestDataUtil.setupTestData(em);
+
+        MemberSearchCondition condition = new MemberSearchCondition();
+        condition.setAgeGoe(35);
+        condition.setAgeLoe(40);
+        condition.setTeamName("teamB");
+
+        List<MemberTeamDto> results = memberJpaRepository.searchByBuilderExpression(condition);
+
+        assertThat(results).extracting("username").containsExactly("member4");
+    }
+
 }
