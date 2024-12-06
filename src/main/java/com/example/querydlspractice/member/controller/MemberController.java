@@ -2,7 +2,6 @@ package com.example.querydlspractice.member.controller;
 
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.dto.MemberTeamDto;
-import com.example.querydlspractice.member.entity.Member;
 import com.example.querydlspractice.member.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
