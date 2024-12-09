@@ -1,5 +1,8 @@
 package com.example.querydlspractice.member.repository;
 
+import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.dto.MemberSearchCondition;
+import com.example.querydlspractice.dto.MemberTeamDto;
 import com.example.querydlspractice.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -10,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -35,6 +37,20 @@ class MemberRepositoryTest {
         List<Member> result = memberRepository.findByUsername("member1");
         assertThat(result).containsExactly(member);
 
+    }
+
+    @Test
+    public void searchTest() {
+        TestDataUtil.setupTestData(em);
+
+        MemberSearchCondition condition = new MemberSearchCondition();
+        condition.setAgeGoe(35);
+        condition.setAgeLoe(40);
+        condition.setTeamName("teamB");
+
+        List<MemberTeamDto> results = memberRepository.search(condition);
+
+        assertThat(results).extracting("username").containsExactly("member4");
     }
 
 }
