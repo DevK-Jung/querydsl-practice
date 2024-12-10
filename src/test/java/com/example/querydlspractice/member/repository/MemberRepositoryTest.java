@@ -4,6 +4,7 @@ import com.example.querydlspractice.TestDataUtil;
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.dto.MemberTeamDto;
 import com.example.querydlspractice.member.entity.Member;
+import com.example.querydlspractice.member.entity.QMember;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,17 @@ class MemberRepositoryTest {
 
         assertThat(page.getSize()).isEqualTo(3);
         assertThat(page.getContent()).extracting("username").containsExactly("member1", "member2", "member3");
+    }
+
+    @Test
+    public void querydslPredicateExecutorTest() {
+        TestDataUtil.setupTestData(em);
+
+        QMember member = QMember.member;
+        Iterable<Member> result = memberRepository.findAll(member.age.between(20, 40).and(member.username.eq("member1")));
+        for (Member findMember : result) {
+            System.out.println("findMember = " + findMember);
+        }
     }
 
 }
