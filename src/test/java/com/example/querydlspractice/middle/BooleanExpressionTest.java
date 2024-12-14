@@ -1,9 +1,7 @@
 package com.example.querydlspractice.middle;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

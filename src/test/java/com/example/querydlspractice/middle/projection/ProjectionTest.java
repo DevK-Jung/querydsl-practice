@@ -1,6 +1,6 @@
 package com.example.querydlspractice.middle.projection;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

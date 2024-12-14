@@ -1,6 +1,6 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,6 +18,9 @@ import static com.example.querydlspractice.member.entity.QMember.member;
 import static com.example.querydlspractice.team.entity.QTeam.team;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Join 문
+ */
 @Transactional
 @SpringBootTest
 public class JoinTest {
@@ -26,12 +29,13 @@ public class JoinTest {
 
     JPAQueryFactory queryFactory;
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
     @Test
+    @DisplayName("inner join")
     public void join() {
 
         List<Member> result = queryFactory
@@ -47,6 +51,7 @@ public class JoinTest {
     }
 
     @Test
+    @DisplayName("thetaJoin")
     public void thetaJoin() {
         em.persist(new Member("teamA"));
         em.persist(new Member("teamB"));
@@ -67,6 +72,7 @@ public class JoinTest {
      * JPQL: select m from Member m left join m.team t on t.name = "teamA"
      */
     @Test
+    @DisplayName("키 값이 아닌 항목으로 조인")
     public void joinOnFiltering() {
 
         // 아래 두 쿼리는 동일

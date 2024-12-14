@@ -1,10 +1,11 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,8 @@ import java.util.List;
 import static com.example.querydlspractice.member.entity.QMember.member;
 
 /**
- * 가급적이면 DB는 최소한의 필터링과 그룹핑만 하고 실제 데이터 전환은 로직적으로 푸는걸 권장
+ * case when 문법
+ * ! 가급적이면 DB는 최소한의 필터링과 그룹핑만 하고 실제 데이터 전환은 로직적으로 푸는걸 권장
  */
 @Transactional
 @SpringBootTest
@@ -26,13 +28,13 @@ public class CaseTest {
     JPAQueryFactory queryFactory;
 
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
-    // 회원의 나이를 한글로 변환
     @Test
+    @DisplayName("회원의 나이를 한글로 변환")
     public void basicCase() {
         List<String> result = queryFactory
                 .select(
@@ -50,6 +52,7 @@ public class CaseTest {
     }
 
     @Test
+    @DisplayName("CaseBuilde를 사용한 Complex Case")
     public void complexCase() {
         List<String> result = queryFactory
                 .select(

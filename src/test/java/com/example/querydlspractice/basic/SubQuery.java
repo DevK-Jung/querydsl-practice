@@ -1,6 +1,6 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
 import com.example.querydlspractice.member.entity.QMember;
 import com.querydsl.core.Tuple;
@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ import java.util.List;
 import static com.example.querydlspractice.member.entity.QMember.member;
 
 /**
+ * SubQuery 사용
  * 한계점 - 단 JPQL 은 From절에서 SubQuery를 사용할 수 없다.(인라인 뷰)
  * 해결 방안:
  * <ul>
@@ -36,13 +38,13 @@ public class SubQuery {
     JPAQueryFactory queryFactory;
 
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
-    // 나이가 제일 많은 회원
     @Test
+    @DisplayName("나이가 제일 많은 회원")
     public void subQuery() {
         QMember memberSub = new QMember("memberSub");
 
@@ -59,8 +61,8 @@ public class SubQuery {
                 .containsExactly(40);
     }
 
-    // 나이가 평균 이상인 회원
     @Test
+    @DisplayName("나이가 평균 이상인 회원")
     public void subQueryGoe() {
         QMember memberSub = new QMember("memberSub");
 
@@ -78,6 +80,7 @@ public class SubQuery {
     }
 
     @Test
+    @DisplayName("in 절안에서 사용")
     public void subQueryIn() {
         QMember memberSub = new QMember("memberSub");
 
@@ -96,6 +99,7 @@ public class SubQuery {
     }
 
     @Test
+    @DisplayName("select 절에 사용")
     public void selectSubQuery() {
         QMember memberSub = new QMember("memberSub");
 

@@ -1,6 +1,6 @@
 package com.example.querydlspractice.middle.projection;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.dto.MemberDto;
 import com.example.querydlspractice.dto.UserDto;
 import com.example.querydlspractice.member.entity.QMember;

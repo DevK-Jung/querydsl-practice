@@ -1,13 +1,12 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
-import com.example.querydlspractice.member.entity.QMember;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,23 +16,25 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
-// 상수테스트
+/**
+ * 상수 및 문자열 함수(concat) 사용
+ */
 @Transactional
 @SpringBootTest
-public class ConstantsTest {
+public class ConstantsAndStringFunctionTest {
     @Autowired
     EntityManager em;
 
     JPAQueryFactory queryFactory;
 
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
-    // 상수
     @Test
+    @DisplayName("상수 사용")
     public void constant() {
         List<Tuple> result = queryFactory
                 .select(member.username,
@@ -47,6 +48,7 @@ public class ConstantsTest {
     }
 
     @Test
+    @DisplayName("문자열 병합")
     public void concat() {
         // {username}__{age}
         List<String> result = queryFactory

@@ -1,11 +1,12 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,9 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
+/**
+ * 정렬
+ */
 @Transactional
 @SpringBootTest
 public class SortTest {
@@ -40,6 +44,7 @@ public class SortTest {
      * </ul>
      */
     @Test
+    @DisplayName("정렬 테스트")
     public void sort() {
         em.persist(new Member(null, 100));
         em.persist(new Member("member5", 100));

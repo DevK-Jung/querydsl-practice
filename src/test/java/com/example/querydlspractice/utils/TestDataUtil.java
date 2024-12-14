@@ -1,4 +1,4 @@
-package com.example.querydlspractice;
+package com.example.querydlspractice.utils;
 
 import com.example.querydlspractice.member.entity.Member;
 import com.example.querydlspractice.team.entity.Team;

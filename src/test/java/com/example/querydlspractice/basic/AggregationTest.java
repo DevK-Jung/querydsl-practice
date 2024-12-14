@@ -1,13 +1,12 @@
 package com.example.querydlspractice.basic;
 
-import com.example.querydlspractice.TestDataUtil;
-import com.example.querydlspractice.member.entity.Member;
-import com.example.querydlspractice.team.entity.QTeam;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
-import static com.example.querydlspractice.team.entity.QTeam.*;
+import static com.example.querydlspractice.team.entity.QTeam.team;
 
+/**
+ * 집계 함수 테스트
+ */
 @Transactional
 @SpringBootTest
 public class AggregationTest {
@@ -27,16 +29,15 @@ public class AggregationTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
-
     @Test
-    public void test() {
+    @DisplayName("집계함수 테스트")
+    public void aggregationTest() {
         List<Tuple> result = queryFactory
                 .select(
                         member.count(),
@@ -57,6 +58,7 @@ public class AggregationTest {
     }
 
     @Test
+    @DisplayName("그룹")
     public void group() {
         List<Tuple> result = queryFactory
                 .select(
