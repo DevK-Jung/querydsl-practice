@@ -1,4 +1,4 @@
-package com.example.querydlspractice.member.repository;
+package com.example.querydlspractice.member.repository.querydslSupport;
 
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.dto.MemberTeamDto;
@@ -12,11 +12,15 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 import static com.example.querydlspractice.team.entity.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * QuerydslRepositorySupport 를 활용하여 쿼리 생성
+ */
 public class MemberQueryRepositorySupportImpl extends QuerydslRepositorySupport {
     public MemberQueryRepositorySupportImpl() {
         super(Member.class);
@@ -41,7 +45,7 @@ public class MemberQueryRepositorySupportImpl extends QuerydslRepositorySupport 
                         )
                 );
 
-        JPQLQuery<MemberTeamDto> query = getQuerydsl().applyPagination(pageable, jpaQuery);
+        JPQLQuery<MemberTeamDto> query = Objects.requireNonNull(getQuerydsl()).applyPagination(pageable, jpaQuery);
 
         List<MemberTeamDto> results = query.fetch();
 

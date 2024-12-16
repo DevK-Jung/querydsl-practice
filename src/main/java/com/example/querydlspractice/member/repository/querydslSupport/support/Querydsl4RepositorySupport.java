@@ -1,4 +1,4 @@
-package com.example.querydlspractice.member.repository.support;
+package com.example.querydlspractice.member.repository.querydslSupport.support;
 
 import com.mysema.commons.lang.Assert;
 import com.querydsl.core.types.EntityPath;

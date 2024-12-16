@@ -32,11 +32,11 @@ public class Member {
         this.username = username;
         this.age = age;
         if (team != null) {
-            chagneTeam(team);
+            changeTeam(team);
         }
     }
 
-    private void chagneTeam(Team team) {
+    private void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
     }

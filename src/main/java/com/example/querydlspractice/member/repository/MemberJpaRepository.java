@@ -17,6 +17,9 @@ import static com.example.querydlspractice.member.entity.QMember.member;
 import static com.example.querydlspractice.team.entity.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * EntityManager 를 활용한 순수 JPA 활용
+ */
 @Repository
 public class MemberJpaRepository {
 
@@ -26,34 +29,40 @@ public class MemberJpaRepository {
 
     public MemberJpaRepository(EntityManager em) {
         this.em = em;
-        this.queryFactory = new JPAQueryFactory(em);
+        this.queryFactory = new JPAQueryFactory(em); // Bean 으로 만들어서 사용해도 됨
     }
 
+    // 저장
     public void save(Member member) {
         em.persist(member);
     }
 
+    // id로 조회
     public Optional<Member> findById(Long id) {
         return Optional.ofNullable(em.find(Member.class, id));
     }
 
+    // 전체 조회
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
 
+    // querydsl 을 활용한 조회
     public List<Member> findAll_Querydsl() {
         return queryFactory
                 .selectFrom(member)
                 .fetch();
     }
 
+    // jpql을 활용하여 username으로 조회
     public List<Member> findByUsername(String username) {
         return em.createQuery("select m from Member m where m.username=:username", Member.class)
                 .setParameter("username", username)
                 .getResultList();
     }
 
+    // querydsl 을 활용하여 username 으로 조회
     public List<Member> findByUsername_Querydsl(String username) {
         return queryFactory
                 .select(member)
@@ -62,6 +71,7 @@ public class MemberJpaRepository {
                 .fetch();
     }
 
+    // querydsl에서 BooleanBuilder 를 활용한 검색
     public List<MemberTeamDto> searchByBuilder(MemberSearchCondition condition) {
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -95,6 +105,7 @@ public class MemberJpaRepository {
                 .fetch();
     }
 
+    // BooleanExpressions을 활용하여 조건문 조합
     public List<MemberTeamDto> searchByBuilderExpression(MemberSearchCondition condition) {
 
         return queryFactory

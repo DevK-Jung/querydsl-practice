@@ -17,6 +17,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberJpaRepository memberJpaRepository;
+
     private final MemberRepository memberRepository;
 
     @GetMapping("/v1/members")

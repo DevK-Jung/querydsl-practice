@@ -1,4 +1,4 @@
-package com.example.querydlspractice.member.repository;
+package com.example.querydlspractice.member.repository.custom;
 
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.dto.MemberTeamDto;
@@ -12,6 +12,4 @@ public interface MemberRepositoryCustom {
     List<MemberTeamDto> search(MemberSearchCondition condition);
     Page<MemberTeamDto> searchPage(MemberSearchCondition condition, Pageable pageable);
     Page<MemberTeamDto> searchPageUpgradeCountQuery(MemberSearchCondition condition, Pageable pageable);
-
-
 }

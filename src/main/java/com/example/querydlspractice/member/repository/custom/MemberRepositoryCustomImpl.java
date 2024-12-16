@@ -1,4 +1,4 @@
-package com.example.querydlspractice.member.repository;
+package com.example.querydlspractice.member.repository.custom;
 
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.dto.MemberTeamDto;
@@ -18,15 +18,14 @@ import static com.example.querydlspractice.member.entity.QMember.member;
 import static com.example.querydlspractice.team.entity.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
-// interface뒤에 Impl을 붙여서 만들어야함
-public class MemberRepositoryImpl implements MemberRepositoryCustom {
+// interface 뒤에 Impl을 붙여서 만들어야함
+public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public MemberRepositoryImpl(EntityManager em) {
+    public MemberRepositoryCustomImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
-
 
     @Override
     public List<MemberTeamDto> search(MemberSearchCondition condition) {

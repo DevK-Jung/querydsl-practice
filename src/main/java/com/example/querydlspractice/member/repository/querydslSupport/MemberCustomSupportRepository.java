@@ -1,8 +1,8 @@
-package com.example.querydlspractice.member.repository;
+package com.example.querydlspractice.member.repository.querydslSupport;
 
 import com.example.querydlspractice.dto.MemberSearchCondition;
 import com.example.querydlspractice.member.entity.Member;
-import com.example.querydlspractice.member.repository.support.Querydsl4RepositorySupport;
+import com.example.querydlspractice.member.repository.querydslSupport.support.Querydsl4RepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +14,10 @@ import static com.example.querydlspractice.member.entity.QMember.*;
 import static com.example.querydlspractice.team.entity.QTeam.team;
 import static org.springframework.util.StringUtils.hasText;
 
+// QuerydslRepositorySupport
 @Repository
-public class MemberCustomSupportRepositroy extends Querydsl4RepositorySupport {
-    public MemberCustomSupportRepositroy() {
+public class MemberCustomSupportRepository extends Querydsl4RepositorySupport {
+    public MemberCustomSupportRepository() {
         super(Member.class);
     }
 
