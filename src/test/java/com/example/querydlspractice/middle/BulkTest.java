@@ -1,10 +1,11 @@
 package com.example.querydlspractice.middle;
 
-import com.example.querydlspractice.utils.TestDataUtil;
 import com.example.querydlspractice.member.entity.Member;
+import com.example.querydlspractice.utils.TestDataUtil;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,10 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
+/**
+ * bulk 쿼리
+ * 벌크 연산후 꼭 영속성 컨텍스트를 지워 줘야함
+ */
 @Transactional
 @SpringBootTest
 public class BulkTest {
@@ -23,15 +28,15 @@ public class BulkTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
     @Test
     @Commit
+    @DisplayName("bulk update")
     public void bulkUpdate() {
         long count = queryFactory
                 .update(member)
@@ -55,6 +60,7 @@ public class BulkTest {
 
     @Test
     @Commit
+    @DisplayName("bulk update - add age")
     public void bulkAdd() {
         long count = queryFactory
                 .update(member)
@@ -64,6 +70,7 @@ public class BulkTest {
 
     @Test
     @Commit
+    @DisplayName("bulk delete")
     public void bulkDelete() {
         long count = queryFactory
                 .delete(member)

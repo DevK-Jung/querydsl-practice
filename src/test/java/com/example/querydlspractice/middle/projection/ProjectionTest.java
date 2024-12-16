@@ -23,9 +23,8 @@ public class ProjectionTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }

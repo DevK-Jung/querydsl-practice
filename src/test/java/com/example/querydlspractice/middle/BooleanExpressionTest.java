@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
+/**
+ * where 절 Boolean Expression 사용하여 조건절 조합
+ */
 @Transactional
 @SpringBootTest
 public class BooleanExpressionTest {
@@ -24,9 +27,8 @@ public class BooleanExpressionTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }

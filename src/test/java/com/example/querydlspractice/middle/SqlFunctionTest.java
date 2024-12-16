@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,9 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
+/**
+ * SQL Function
+ */
 @Transactional
 @SpringBootTest
 public class SqlFunctionTest {
@@ -22,14 +26,14 @@ public class SqlFunctionTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
 
     @Test
+    @DisplayName("replace")
     public void sqlFunctionReplace() {
         List<String> result = queryFactory
                 .select(
@@ -47,6 +51,7 @@ public class SqlFunctionTest {
     }
 
     @Test
+    @DisplayName("upper")
     public void sqlFunctionUpper() {
         List<String> result = queryFactory
                 .select(

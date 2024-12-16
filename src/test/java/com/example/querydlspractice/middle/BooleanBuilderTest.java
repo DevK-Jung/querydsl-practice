@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.example.querydlspractice.member.entity.QMember.member;
 
+/**
+ * BooleanBuilder를 활용한 조건문
+ */
 @Transactional
 @SpringBootTest
 public class BooleanBuilderTest {
@@ -24,13 +27,11 @@ public class BooleanBuilderTest {
 
     JPAQueryFactory queryFactory;
 
-    // 테스트 케이스 실행전 테스트 데이터 세팅
     @BeforeEach
-    public void before() {
+    public void before() { // 테스트 케이스 실행전 테스트 데이터 세팅
         queryFactory = new JPAQueryFactory(em);
         TestDataUtil.setupTestData(em);
     }
-
     @Test
     public void dynamicQuery_BooleanBuilder() {
         String usernameParam = "member1";
