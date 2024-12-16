@@ -1,6 +1,6 @@
 # Practice QueryDSL
 
-> 실전! Querydsl 강의를 실습하며 작성한 코드입니다. QueryDSL의 기본부터 중급 문법까지 다양한 기능을 익히고 활용해 보았습니다.
+> [실전! Querydsl](https://www.inflearn.com/course/querydsl-%EC%8B%A4%EC%A0%84/dashboard) 강의를 실습하며 작성한 코드입니다. QueryDSL의 기본부터 중급 문법까지 다양한 기능을 익히고 활용해 보았습니다.
 
 ## 목차
 - [개발 환경](#개발-환경)
