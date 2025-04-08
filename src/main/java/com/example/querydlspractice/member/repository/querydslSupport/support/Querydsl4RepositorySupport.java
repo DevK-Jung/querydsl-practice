@@ -7,7 +7,6 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -26,22 +25,17 @@ import java.util.function.Function;
  */
 public abstract class Querydsl4RepositorySupport {
 
-    private final Class<?> domainClass;
-    private Querydsl querydsl;
-    private EntityManager entityManager;
-    private JPAQueryFactory queryFactory;
+    private final EntityManager entityManager;
+    private final Querydsl querydsl;
+    private final JPAQueryFactory queryFactory;
 
-    public Querydsl4RepositorySupport(Class<?> domainClass) {
+    public Querydsl4RepositorySupport(Class<?> domainClass, EntityManager entityManager) {
         Assert.notNull(domainClass, "Domain class must not be null!");
-        this.domainClass = domainClass;
-    }
-
-    @Autowired
-    public void setEntityManager(EntityManager entityManager) {
         Assert.notNull(entityManager, "EntityManager must not be null!");
 
         JpaEntityInformation<?, ?> entityInformation =
                 JpaEntityInformationSupport.getEntityInformation(domainClass, entityManager);
+
         SimpleEntityPathResolver resolver = SimpleEntityPathResolver.INSTANCE;
         EntityPath<?> path = resolver.createPath(entityInformation.getJavaType());
 
@@ -86,9 +80,11 @@ public abstract class Querydsl4RepositorySupport {
     protected <T> Page<T> applyPagination(Pageable pageable,
                                           Function<JPAQueryFactory, JPAQuery<T>> contentQuery,
                                           Function<JPAQueryFactory, JPAQuery<Long>> countQuery) {
+
         JPAQuery<T> jpaContentQuery = contentQuery.apply(getQueryFactory());
         List<T> content = getQuerydsl().applyPagination(pageable, jpaContentQuery).fetch();
         Long total = countQuery.apply(getQueryFactory()).fetchOne();
+
         return PageableExecutionUtils.getPage(content, pageable, () -> total != null ? total : 0L);
     }
 }
