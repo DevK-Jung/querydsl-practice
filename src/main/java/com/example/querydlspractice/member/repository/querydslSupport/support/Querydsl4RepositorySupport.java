@@ -1,6 +1,5 @@
 package com.example.querydlspractice.member.repository.querydslSupport.support;
 
-import com.mysema.commons.lang.Assert;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.PathBuilder;
@@ -16,20 +15,18 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.data.support.PageableExecutionUtils;
-import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.function.Function;
 
 /**
- * Querydsl 4.x 버전에 맞춘 Querydsl 지원 라이브러리 *
- *
- * @author Younghan Kim
- * @see org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
+ * Querydsl 4.x version support base class for custom repositories.
+ * Improves upon Spring Data JPA's QuerydslRepositorySupport.
  */
-@Repository
 public abstract class Querydsl4RepositorySupport {
-    private final Class domainClass;
+
+    private final Class<?> domainClass;
     private Querydsl querydsl;
     private EntityManager entityManager;
     private JPAQueryFactory queryFactory;
@@ -42,13 +39,14 @@ public abstract class Querydsl4RepositorySupport {
     @Autowired
     public void setEntityManager(EntityManager entityManager) {
         Assert.notNull(entityManager, "EntityManager must not be null!");
-        JpaEntityInformation entityInformation =
+
+        JpaEntityInformation<?, ?> entityInformation =
                 JpaEntityInformationSupport.getEntityInformation(domainClass, entityManager);
         SimpleEntityPathResolver resolver = SimpleEntityPathResolver.INSTANCE;
-        EntityPath path = resolver.createPath(entityInformation.getJavaType());
+        EntityPath<?> path = resolver.createPath(entityInformation.getJavaType());
+
         this.entityManager = entityManager;
-        this.querydsl = new Querydsl(entityManager, new
-                PathBuilder<>(path.getType(), path.getMetadata()));
+        this.querydsl = new Querydsl(entityManager, new PathBuilder<>(path.getType(), path.getMetadata()));
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
@@ -79,24 +77,18 @@ public abstract class Querydsl4RepositorySupport {
         return getQueryFactory().selectFrom(from);
     }
 
-    protected <T> Page<T> applyPagination(Pageable pageable,
-                                          Function<JPAQueryFactory, JPAQuery> contentQuery) {
-        JPAQuery jpaQuery = contentQuery.apply(getQueryFactory());
-        List<T> content = getQuerydsl().applyPagination(pageable,
-                jpaQuery).fetch();
-        return PageableExecutionUtils.getPage(content, pageable,
-                jpaQuery::fetchCount);
+    protected <T> Page<T> applyPagination(Pageable pageable, Function<JPAQueryFactory, JPAQuery<T>> contentQuery) {
+        JPAQuery<T> jpaQuery = contentQuery.apply(getQueryFactory());
+        List<T> content = getQuerydsl().applyPagination(pageable, jpaQuery).fetch();
+        return PageableExecutionUtils.getPage(content, pageable, () -> jpaQuery.fetch().size());
     }
 
     protected <T> Page<T> applyPagination(Pageable pageable,
-                                          Function<JPAQueryFactory, JPAQuery> contentQuery, Function<JPAQueryFactory,
-            JPAQuery> countQuery) {
-        JPAQuery jpaContentQuery = contentQuery.apply(getQueryFactory());
+                                          Function<JPAQueryFactory, JPAQuery<T>> contentQuery,
+                                          Function<JPAQueryFactory, JPAQuery<Long>> countQuery) {
+        JPAQuery<T> jpaContentQuery = contentQuery.apply(getQueryFactory());
         List<T> content = getQuerydsl().applyPagination(pageable, jpaContentQuery).fetch();
-        JPAQuery countResult = countQuery.apply(getQueryFactory());
-        return PageableExecutionUtils.getPage(content, pageable,
-                countResult::fetchCount);
+        Long total = countQuery.apply(getQueryFactory()).fetchOne();
+        return PageableExecutionUtils.getPage(content, pageable, () -> total != null ? total : 0L);
     }
 }
-
- 
